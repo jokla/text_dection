@@ -22,7 +22,7 @@ static unsigned int get_current_time(void)
 using namespace cv;
 int main(){
     Mat img_ocv;
-    img_ocv = imread("1.jpg",CV_LOAD_IMAGE_GRAYSCALE | CCV_IO_NO_COPY);
+    img_ocv = imread("TestImage1.jpg",CV_LOAD_IMAGE_GRAYSCALE | CCV_IO_NO_COPY);
     ccv_dense_matrix_t* image = 0;
     ccv_read(img_ocv.data, &image, CCV_IO_GRAY_RAW, img_ocv.rows, img_ocv.cols, img_ocv.step[0]);
     // ccv_read("1.jpg", &image, CCV_IO_GRAY | CCV_IO_ANY_FILE);
@@ -33,7 +33,7 @@ int main(){
 
     // Tesseract
     tesseract::TessBaseAPI tess;
-    if( tess.Init(NULL, "fra", tesseract::OEM_DEFAULT))
+    if( tess.Init(NULL, "eng", tesseract::OEM_DEFAULT))
     {
         fprintf(stderr, "Could not initialize tesseract.\n");
         exit(1);
@@ -67,11 +67,6 @@ int main(){
                 Mat image_roi = img_ocv(roi_rect);
                 Mat binary_roi;
                 threshold(image_roi,binary_roi, 0, 255, CV_THRESH_BINARY | CV_THRESH_OTSU);
-
-
-
-
-
 
                 //imshow("Image cropped",image_roi);
                 //imwrite("cropped.jpg"+i, image_roi);

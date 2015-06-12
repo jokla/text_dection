@@ -25,7 +25,7 @@ static unsigned int get_current_time(void)
 using namespace cv;
 int main(){
     Mat img_ocv;
-    img_ocv = imread("python.png",CV_LOAD_IMAGE_GRAYSCALE | CCV_IO_NO_COPY);
+    img_ocv = imread("TestImage1.jpg",CV_LOAD_IMAGE_GRAYSCALE | CCV_IO_NO_COPY);
     ccv_dense_matrix_t* image = 0;
     ccv_read(img_ocv.data, &image, CCV_IO_GRAY_RAW, img_ocv.rows, img_ocv.cols, img_ocv.step[0]);
     // ccv_read("1.jpg", &image, CCV_IO_GRAY | CCV_IO_ANY_FILE);
@@ -41,21 +41,21 @@ int main(){
     GenericVector<STRING> vars_vec;
     vars_vec.push_back("load_system_dawg");
     vars_vec.push_back("load_freq_dawg");
-//    vars_vec.push_back("load_punc_dawg");
-//    vars_vec.push_back("load_number_dawg");
-//    vars_vec.push_back("load_unambig_dawg");
-//    vars_vec.push_back("load_bigram_dawg");
-//    vars_vec.push_back("load_fixed_length_dawgs");
+    vars_vec.push_back("load_punc_dawg");
+    vars_vec.push_back("load_number_dawg");
+    vars_vec.push_back("load_unambig_dawg");
+    vars_vec.push_back("load_bigram_dawg");
+    vars_vec.push_back("load_fixed_length_dawgs");
     //vars_vec.push_back("user_patterns_suffix");
 
     GenericVector<STRING> vars_values;
     vars_values.push_back("F");
     vars_values.push_back("F");
-//    vars_values.push_back("F");
-//    vars_values.push_back("F");
-//    vars_values.push_back("F");
-//    vars_values.push_back("F");
-//    vars_values.push_back("F");
+    vars_values.push_back("F");
+    vars_values.push_back("F");
+    vars_values.push_back("F");
+    vars_values.push_back("F");
+    vars_values.push_back("F");
     //vars_values.push_back("pharma-words");
 
     // Tesseract
@@ -66,9 +66,9 @@ int main(){
         exit(1);
     }
     printf("Using tesseract c++ API: %s\n", tess.Version());
-   // tess.SetVariable("tessedit_char_whitelist",
-  //                   "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-  //                   "0123456789,®");
+    tess.SetVariable("tessedit_char_whitelist",
+                     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                     "0123456789,®");
     tess.SetVariable("language_model_penalty_non_dict_word", "0");
     tess.SetPageSegMode(tesseract::PSM_SINGLE_BLOCK);
 
