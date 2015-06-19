@@ -68,7 +68,7 @@ int main(){
     printf("Using tesseract c++ API: %s\n", tess.Version());
     tess.SetVariable("tessedit_char_whitelist",
                      "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                     "0123456789,®");
+                     "0123456789");
     tess.SetVariable("language_model_penalty_non_dict_word", "0");
     tess.SetPageSegMode(tesseract::PSM_SINGLE_BLOCK);
 

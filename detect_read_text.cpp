@@ -22,14 +22,16 @@ static unsigned int get_current_time(void)
 using namespace cv;
 int main(){
     Mat img_ocv;
-    img_ocv = imread("TestImage1.jpg",CV_LOAD_IMAGE_GRAYSCALE | CCV_IO_NO_COPY);
+   Mat img_disp ;
+      img_disp = imread("Original.jpg", CV_LOAD_IMAGE_COLOR);
+    img_ocv = imread("Original.jpg",CV_LOAD_IMAGE_GRAYSCALE | CCV_IO_NO_COPY);
     ccv_dense_matrix_t* image = 0;
     ccv_read(img_ocv.data, &image, CCV_IO_GRAY_RAW, img_ocv.rows, img_ocv.cols, img_ocv.step[0]);
     // ccv_read("1.jpg", &image, CCV_IO_GRAY | CCV_IO_ANY_FILE);
 
     // std::vector<Rect> roi;
 
-    Mat img_disp = img_ocv.clone();
+
 
     // Tesseract
     tesseract::TessBaseAPI tess;
@@ -38,8 +40,13 @@ int main(){
         fprintf(stderr, "Could not initialize tesseract.\n");
         exit(1);
     }
-    tess.SetPageSegMode(tesseract::PSM_SINGLE_BLOCK);
+    //tess.SetPageSegMode(tesseract::PSM_SINGLE_BLOCK);
 
+    tess.SetPageSegMode(tesseract::PSM_SINGLE_WORD);
+    //tess.SetVariable("tessedit_char_whitelist", "0123456789");
+        tess.SetVariable("tessedit_char_whitelist",
+                         "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
+   tess.SetVariable("language_model_penalty_non_dict_word", "0");
 
 
     unsigned int elapsed_time = get_current_time();
@@ -54,7 +61,22 @@ int main(){
             ccv_rect_t* rect = (ccv_rect_t*)ccv_array_get(words, i);
             printf("%d %d %d %d\n", rect->x, rect->y, rect->width, rect->height);
 
-            cv::Rect roi_rect(rect->x-5, rect->y-5,  rect->width+10, rect->height+10);
+            //cv::Rect roi_rect(rect->x-5, rect->y-5,  rect->width+10, rect->height+10);
+            int x = rect->x-2;
+            int y = rect->y-2;
+            int w = rect->width+4;
+            int h = rect->height+4;
+
+            if (x < 0)
+                x = 0;
+            if (y < 0)
+                y = 0;
+            if (w > img_ocv.size().width)
+                w = img_ocv.size().width;
+            if (h > img_ocv.size().height)
+                w = img_ocv.size().height;
+
+            cv::Rect roi_rect(x, y,  w, h);
 
             //roi.push_back(roi_rect);
 
@@ -91,6 +113,10 @@ int main(){
         ccv_array_free(words);
     }
     imshow("Image",img_disp);
+    std::vector<int> compression_params; //vector that stores the compression parameters of the image
+    compression_params.push_back(CV_IMWRITE_JPEG_QUALITY); //specify the compression technique
+    compression_params.push_back(100); //specify the compression quality
+     cv::imwrite("Result.jpg", img_disp, compression_params); //write the image to file
 
     //    Mat image_roi = img_ocv(roi[0]);
     //    Mat binary_roi;
