@@ -33,6 +33,11 @@ target_link_libraries(read_opencv ${TESSERACT_LIBRARIES} ${CMAKE_SOURCE_DIR}/lib
 add_executable(detect_text detect_text.cpp ${CMAKE_SOURCE_DIR}/lib/ccv.h)
 target_link_libraries(detect_text ${TESSERACT_LIBRARIES} ${CMAKE_SOURCE_DIR}/lib/libccv.a)
 
+#Read text
+add_executable( read_text read_text.cpp ${CMAKE_SOURCE_DIR}/lib/ccv.h)
+target_link_libraries(read_text ${TESSERACT_LIBRARIES} ${CMAKE_SOURCE_DIR}/lib/libccv.a)
+
+
 #Detect and read text
 add_executable(detect_read_text detect_read_text.cpp ${CMAKE_SOURCE_DIR}/lib/ccv.h)
 target_link_libraries(detect_read_text ${TESSERACT_LIBRARIES} ${CMAKE_SOURCE_DIR}/lib/libccv.a)

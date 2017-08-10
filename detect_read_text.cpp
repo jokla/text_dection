@@ -23,8 +23,8 @@ using namespace cv;
 int main(){
     Mat img_ocv;
    Mat img_disp ;
-      img_disp = imread("Original.jpg", CV_LOAD_IMAGE_COLOR);
-    img_ocv = imread("Original.jpg",CV_LOAD_IMAGE_GRAYSCALE | CCV_IO_NO_COPY);
+      img_disp = imread("test.jpg", CV_LOAD_IMAGE_COLOR);
+    img_ocv = imread("test.jpg",CV_LOAD_IMAGE_GRAYSCALE | CCV_IO_NO_COPY);
     ccv_dense_matrix_t* image = 0;
     ccv_read(img_ocv.data, &image, CCV_IO_GRAY_RAW, img_ocv.rows, img_ocv.cols, img_ocv.step[0]);
     // ccv_read("1.jpg", &image, CCV_IO_GRAY | CCV_IO_ANY_FILE);
@@ -43,9 +43,9 @@ int main(){
     //tess.SetPageSegMode(tesseract::PSM_SINGLE_BLOCK);
 
     tess.SetPageSegMode(tesseract::PSM_SINGLE_WORD);
-    //tess.SetVariable("tessedit_char_whitelist", "0123456789");
-        tess.SetVariable("tessedit_char_whitelist",
-                         "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
+    tess.SetVariable("tessedit_char_whitelist", "0123456789");
+//        tess.SetVariable("tessedit_char_whitelist",
+//                         "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
    tess.SetVariable("language_model_penalty_non_dict_word", "0");
 
 
@@ -90,7 +90,7 @@ int main(){
                 Mat binary_roi;
                 threshold(image_roi,binary_roi, 0, 255, CV_THRESH_BINARY | CV_THRESH_OTSU);
 
-                //imshow("Image cropped",image_roi);
+                imshow("Image cropped",image_roi);
                 //imwrite("cropped.jpg"+i, image_roi);
                 imshow("Image cropped bn", binary_roi);
                 //imwrite("cropped_bn.jpg"+i, binary_roi);

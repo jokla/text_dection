@@ -21,11 +21,11 @@ using namespace cv;
 int main(){
     Mat img_ocv;
     //img_ocv = imread("1.jpg",CV_LOAD_IMAGE_GRAYSCALE | CCV_IO_NO_COPY);
-    img_ocv = imread("1.jpg", CV_LOAD_IMAGE_COLOR);
+    img_ocv = imread("test.jpg", CV_LOAD_IMAGE_COLOR);
 
     ccv_dense_matrix_t* image = 0;
     //ccv_read(img_ocv.data, &image, CCV_IO_GRAY_RAW, img_ocv.rows, img_ocv.cols, img_ocv.step[0]);
-    ccv_read("1.jpg", &image, CCV_IO_GRAY | CCV_IO_ANY_FILE);
+    ccv_read("test.jpg", &image, CCV_IO_GRAY | CCV_IO_ANY_FILE);
 
     //ccv_read(img_ocv.data, &image,CCV_IO_RGB_RAW | CCV_IO_ANY_RAW | CCV_IO_GRAY, img_ocv.rows, img_ocv.cols, img_ocv.step[0]);
 
@@ -34,8 +34,8 @@ int main(){
 
     ccv_swt_param_t params = ccv_swt_default_params;
 
-            params.direction = CCV_DARK_TO_BRIGHT;
-           // params.direction = CCV_BRIGHT_TO_DARK;
+           // params.direction = CCV_DARK_TO_BRIGHT;
+            params.direction = CCV_BRIGHT_TO_DARK;
 
 
 
